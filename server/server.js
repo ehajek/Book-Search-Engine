@@ -14,7 +14,7 @@ const server = new ApolloServer({
   resolvers,
   context: authMiddleware,
 });
-// // Apollo 3.0 Testing
+// Apollo 3.0 Testing
 // server.start().then(res => {
 //   server.applyMiddleware({ app });
 //   app.listen({ port: `${PORT}` }, () =>
@@ -28,7 +28,6 @@ async function startServer() {
 }
 
 startServer();
-
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
