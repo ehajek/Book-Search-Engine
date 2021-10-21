@@ -5,6 +5,7 @@ import { Form, Button, Alert } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
+//import context from 'react-bootstrap/esm/AccordionContext';
 
 const SignupForm = () => {
   // set initial form state
@@ -32,11 +33,11 @@ const SignupForm = () => {
     }
 
     try {
-      const { response } = await createUser({
+      const { data } = await createUser({
         variables: { ...userFormData }
       });
-
-      Auth.login(response.addUser.token);
+console.log(data);
+      Auth.login(data.addUser.token);
     } catch (err) {
       console.error(err);
       setShowAlert(true);

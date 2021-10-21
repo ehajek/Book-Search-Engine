@@ -30,10 +30,10 @@ const LoginForm = () => {
       event.stopPropagation();
     }
     try {
-      const { response } = await login({
+      const { data } = await login({
         variables: { ...userFormData },
       });
-      Auth.login(response.login.token);
+      Auth.login(data.login.token);
     } catch (err) {
       console.error(error);
       setShowAlert(true);

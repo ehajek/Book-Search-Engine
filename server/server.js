@@ -15,15 +15,6 @@ const startApollo = async () => {
     resolvers,
     context: authMiddleware
   })
-
-  // Apollo 3.0 Testing
-  // server.start().then(res => {
-  //   server.applyMiddleware({ app });
-  //   app.listen({ port: `${PORT}` }, () =>
-  //     console.log(`API server running on port ${PORT}!`),
-  //     console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`)
-  //   )
-  // });
   await server.start();
   server.applyMiddleware({ app });
   console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
