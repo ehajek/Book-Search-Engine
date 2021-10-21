@@ -4,21 +4,52 @@
   "description": "",
   "main": "server/server.js",
   "scripts": {
-    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start": "node server/server.js",
     "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
-    "start:dev": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
     "install": "cd server && npm i && cd ../client && npm i",
     "build": "cd client && npm run build"
   },
   "keywords": [],
-  "author": "",
+  "author": "Eddie Hajek",
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^6.3.0"
   },
   "dependencies": {
-    "@apollo/client": "^3.4.16",
-    "@apollo/react-hooks": "^4.0.0",
-    "apollo-server-express": "^3.4.0"
-  }
+    "color-convert": "^2.0.1",
+    "cliui": "^7.0.4",
+    "ansi-regex": "^5.0.1",
+    "date-fns": "^2.25.0",
+    "chalk": "^4.1.2",
+    "color-name": "^1.1.4",
+    "get-caller-file": "^2.0.5",
+    "emoji-regex": "^8.0.0",
+    "ansi-styles": "^4.3.0",
+    "has-flag": "^4.0.0",
+    "is-fullwidth-code-point": "^3.0.0",
+    "escalade": "^3.1.1",
+    "require-directory": "^2.1.1",
+    "spawn-command": "^0.0.2-1",
+    "rxjs": "^6.6.7",
+    "lodash": "^4.17.21",
+    "strip-ansi": "^6.0.1",
+    "string-width": "^4.2.3",
+    "supports-color": "^8.1.1",
+    "tree-kill": "^1.2.2",
+    "y18n": "^5.0.8",
+    "wrap-ansi": "^7.0.0",
+    "yargs": "^16.2.0",
+    "yargs-parser": "^20.2.9"
+  },
+  "engines": {
+    "node": "16.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ehajek/Book-Search-Engine.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ehajek/Book-Search-Engine/issues"
+  },
+  "homepage": "https://github.com/ehajek/Book-Search-Engine#readme"
 }

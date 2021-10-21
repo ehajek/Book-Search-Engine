@@ -5,51 +5,52 @@ import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_ME } from '../utils/queries';
 import { REMOVE_BOOK } from '../utils/mutations';
 import Auth from '../utils/auth';
-import { removeBookId, saveBookIds } from '../utils/localStorage';
+import { removeBookId } from '../utils/localStorage';
 
 const SavedBooks = () => {
-  // const [userData, setUserData] = useState({});
   const { loading, data } = useQuery(QUERY_ME);
-  const [removeBook, { error }] = useMutation(REMOVE_BOOK);
+  const [removeBook] = useMutation(REMOVE_BOOK);
+  const userData = data?.me || {};
 
 
-  const userData = data?.me || [];
-
-  // use this to determine if `useEffect()` hook needs to run again
-  //const userDataLength = Object.keys(userData).length;
-
-
-  // create function that accepts the book's mongo _id value as param and deletes the book from the database
+  if (!userData?.username) {
+    return (
+      <h4>You are not logged in!</h4>
+    );
+  }
   const handleDeleteBook = async (bookId) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
+
 
     if (!token) {
       return false;
     }
 
-
     try {
-      const data = await removeBook({
+      await removeBook({
         variables: { bookId: bookId },
+        update: cache => {
+          const data = cache.readQuery({ query: QUERY_ME });
+          const userDataCache = data.me;
+          const savedBooksCache = userDataCache.savedBooks;
+          const updatedBookCache = savedBooksCache.filter((book) =>
+            book.bookId !== bookId
+          );
+          data.me.savedBooks = updatedBookCache;
+          cache.writeQuery({
+            query: QUERY_ME,
+            data: { data: { ...data.me.savedBooks } }
+          })
+        }
       });
-
-
-      // upon success, remove book's id from localStorage
-      if (!data) {
-        throw new Error("Error delete Book ID!");
-      }
       removeBookId(bookId);
     } catch (err) {
-      console.error(error);
+      console.error(err);
     }
   };
-  // if data isn't here yet, say so
   if (loading) {
     return <h2>LOADING...</h2>;
   }
-  const savedBookIds = userData.savedBooks.map((book) => book.bookId);
-  saveBookIds(savedBookIds);
-
 
   return (
     <>
